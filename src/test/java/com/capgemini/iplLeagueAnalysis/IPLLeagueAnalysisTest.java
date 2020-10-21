@@ -64,4 +64,11 @@ public class IPLLeagueAnalysisTest {
 		Assert.assertEquals("Shikhar Dhawan", listOfTopStrikeRate.get(0).player);
 	}
 
+	@Test
+	public void givenMostRunCSVFileReturnsBestStrikeRatesWith6sAnd4s() throws IPLAnalyserException, CSVException {
+		iplLeagueAnalysis.loadMostRunsData(MOST_RUN_CSV_FILE);
+		List<MostRunCSV> listOfTopStrikeRate = iplLeagueAnalysis.getBestStrikeRateWith6sAnd4s(MOST_RUN_CSV_FILE);
+		Assert.assertEquals("Andre Russell", listOfTopStrikeRate.get(0).player);
+	}
+
 }

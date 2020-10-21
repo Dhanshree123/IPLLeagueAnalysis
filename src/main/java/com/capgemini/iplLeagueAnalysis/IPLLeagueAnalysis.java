@@ -100,4 +100,22 @@ public class IPLLeagueAnalysis {
 
 		return max4sList;
 	}
+
+	public List<MostRunCSV> getBestStrikeRateWith6sAnd4s(String mostRunCsvFile) throws CSVException {
+		if (mostRunList == null) {
+			throw new CSVException("CSV File Builder, not returned list", CSVException.ExceptionType.CSV_ERROR);
+		} else if (mostRunList.size() == 0) {
+			throw new CSVException("List is empty", CSVException.ExceptionType.NO_CSV_DATA);
+		}
+		int mostNumBoundaries = mostRunList.stream().map(i -> i.num4s + i.num6s).max(Integer::compare).get();
+		List<MostRunCSV> max4sAnd6sList = mostRunList.stream().filter(i -> i.num4s + i.num6s == mostNumBoundaries)
+				.collect(Collectors.toList());
+
+		double HighestStrikeRate = max4sAnd6sList.stream().map(i -> i.sr).max(Double::compare).get();
+
+		List<MostRunCSV> maxStrikeRateList = max4sAnd6sList.stream().filter(i -> i.sr == HighestStrikeRate)
+				.collect(Collectors.toList());
+
+		return maxStrikeRateList;
+	}
 }
