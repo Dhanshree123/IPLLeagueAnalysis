@@ -38,6 +38,13 @@
 			<artifactId>gson</artifactId>
 			<version>2.2</version>
 		</dependency>
+		<dependency>
+			<groupId>OpenCSVBuilder</groupId>
+			<artifactId>OpenCSVBuilder</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/OpenCSVBuilder.jar</systemPath>
+		</dependency>
 	</dependencies>
 
 	<build>
