@@ -58,4 +58,18 @@ public class IPLLeagueAnalysis {
 
 		return sortedAvgList;
 	}
+
+	public List<MostRunCSV> getTopStrikeRate(String csvFilePath) throws CSVException {
+		if (mostRunList == null) {
+			throw new CSVException("CSV File Builder, not returned list", CSVException.ExceptionType.CSV_ERROR);
+		} else if (mostRunList.size() == 0) {
+			throw new CSVException("List is empty", CSVException.ExceptionType.NO_CSV_DATA);
+		}
+
+		List<MostRunCSV> sortedStrikeRateList = mostRunList.stream()
+				.sorted((player1, player2) -> Double.compare(player1.sr, player2.sr)).collect(Collectors.toList());
+		Collections.reverse(sortedStrikeRateList);
+
+		return sortedStrikeRateList;
+	}
 }
