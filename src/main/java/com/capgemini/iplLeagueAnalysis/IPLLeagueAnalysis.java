@@ -72,4 +72,32 @@ public class IPLLeagueAnalysis {
 
 		return sortedStrikeRateList;
 	}
+
+	public List<MostRunCSV> getTop6sCricketer(String mostRunCsvFile) throws CSVException {
+		if (mostRunList == null) {
+			throw new CSVException("CSV File Builder, not returned list", CSVException.ExceptionType.CSV_ERROR);
+		} else if (mostRunList.size() == 0) {
+			throw new CSVException("List is empty", CSVException.ExceptionType.NO_CSV_DATA);
+		}
+		List<MostRunCSV> max6sList = mostRunList.stream()
+				.sorted((player1, player2) -> Integer.compare(player1.num6s, player2.num6s))
+				.collect(Collectors.toList());
+		Collections.reverse(max6sList);
+
+		return max6sList;
+	}
+
+	public List<MostRunCSV> getTop4sCricketer(String mostRunCsvFile) throws CSVException {
+		if (mostRunList == null) {
+			throw new CSVException("CSV File Builder, not returned list", CSVException.ExceptionType.CSV_ERROR);
+		} else if (mostRunList.size() == 0) {
+			throw new CSVException("List is empty", CSVException.ExceptionType.NO_CSV_DATA);
+		}
+		List<MostRunCSV> max4sList = mostRunList.stream()
+				.sorted((player1, player2) -> Integer.compare(player1.num4s, player2.num4s))
+				.collect(Collectors.toList());
+		Collections.reverse(max4sList);
+
+		return max4sList;
+	}
 }
