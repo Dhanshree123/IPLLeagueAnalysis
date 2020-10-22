@@ -151,4 +151,12 @@ public class IPLLeagueAnalysis {
 		return sortedAvgList;
 	}
 
+	public List<MostWicketBowler> getTopBowlerStrikeRate(String mostWicketCsvFile) throws CSVException {
+		checkBowlerCustomExceptions();
+		List<MostWicketBowler> sortedStrikeRateList = mostWicketList.stream()
+				.sorted((player1, player2) -> Double.compare(player1.getSR(), player2.getSR()))
+				.collect(Collectors.toList());
+		return sortedStrikeRateList;
+	}
+
 }

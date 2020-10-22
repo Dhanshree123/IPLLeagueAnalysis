@@ -101,4 +101,13 @@ public class IPLLeagueAnalysisTest {
 		Assert.assertEquals(14.5, averageList.get(2).getAverage(), 0.0);
 	}
 
+	@Test
+	public void givenMostRunCSVFileReturnsTop3BowlingStrikeRates() throws IPLAnalyserException, CSVException {
+		iplLeagueAnalysis.loadMostWicketsData(MOST_WICKET_CSV_FILE);
+		List<MostWicketBowler> listOfTopStrikeRate = iplLeagueAnalysis.getTopBowlerStrikeRate(MOST_WICKET_CSV_FILE);
+		Assert.assertEquals(8.66, listOfTopStrikeRate.get(0).getSR(), 0.0);
+		Assert.assertEquals(10.75, listOfTopStrikeRate.get(1).getSR(), 0.0);
+		Assert.assertEquals(11.00, listOfTopStrikeRate.get(2).getSR(), 0.0);
+	}
+
 }
