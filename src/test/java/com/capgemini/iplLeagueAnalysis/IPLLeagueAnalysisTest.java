@@ -71,4 +71,12 @@ public class IPLLeagueAnalysisTest {
 		Assert.assertEquals("Andre Russell", listOfTopStrikeRate.get(0).player);
 	}
 
+	@Test
+	public void givenMostRunCSVFileReturnsCricketersWithGreatAverageWithBestStrikeRates()
+			throws IPLAnalyserException, CSVException {
+		iplLeagueAnalysis.loadMostRunsData(MOST_RUN_CSV_FILE);
+		List<MostRunCSV> listOfTopAverage = iplLeagueAnalysis.getGreatAverageWithBestStrikeRates(MOST_RUN_CSV_FILE);
+		Assert.assertEquals("MS Dhoni", listOfTopAverage.get(0).player);
+	}
+
 }

@@ -118,4 +118,22 @@ public class IPLLeagueAnalysis {
 
 		return maxStrikeRateList;
 	}
+
+	public List<MostRunCSV> getGreatAverageWithBestStrikeRates(String mostRunCsvFile) throws CSVException {
+		if (mostRunList == null) {
+			throw new CSVException("CSV File Builder, not returned list", CSVException.ExceptionType.CSV_ERROR);
+		} else if (mostRunList.size() == 0) {
+			throw new CSVException("List is empty", CSVException.ExceptionType.NO_CSV_DATA);
+		}
+		Double HighestAverage = mostRunList.stream().map(i -> i.getAverage()).max(Double::compare).get();
+		List<MostRunCSV> maxAverageList = mostRunList.stream().filter(i -> i.getAverage() == HighestAverage)
+				.collect(Collectors.toList());
+
+		double HighestStrikeRate = maxAverageList.stream().map(i -> i.sr).max(Double::compare).get();
+
+		List<MostRunCSV> maxStrikeRateList = maxAverageList.stream().filter(i -> i.sr == HighestStrikeRate)
+				.collect(Collectors.toList());
+
+		return maxStrikeRateList;
+	}
 }
