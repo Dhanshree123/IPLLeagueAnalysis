@@ -62,7 +62,7 @@ public class IPLLeagueAnalysis {
 
 	}
 
-	public List<MostRunBatsmen> getTopBatsmenAverages(String csvFilePath) throws CSVException {
+	public List<MostRunBatsmen> getTopBatsmenAverages() throws CSVException {
 		checkBatsMenCustomExceptions();
 		List<MostRunBatsmen> sortedAvgList = mostRunList.stream()
 				.sorted((player1, player2) -> Double.compare(player1.getAverage(), player2.getAverage()))
@@ -72,7 +72,7 @@ public class IPLLeagueAnalysis {
 		return sortedAvgList;
 	}
 
-	public List<MostRunBatsmen> getTopBatsmenStrikeRate(String csvFilePath) throws CSVException {
+	public List<MostRunBatsmen> getTopBatsmenStrikeRate() throws CSVException {
 		checkBatsMenCustomExceptions();
 		List<MostRunBatsmen> sortedStrikeRateList = mostRunList.stream()
 				.sorted((player1, player2) -> Double.compare(player1.sr, player2.sr)).collect(Collectors.toList());
@@ -81,7 +81,7 @@ public class IPLLeagueAnalysis {
 		return sortedStrikeRateList;
 	}
 
-	public List<MostRunBatsmen> getTop6sCricketer(String mostRunCsvFile) throws CSVException {
+	public List<MostRunBatsmen> getTop6sCricketer() throws CSVException {
 		checkBatsMenCustomExceptions();
 		List<MostRunBatsmen> max6sList = mostRunList.stream()
 				.sorted((player1, player2) -> Integer.compare(player1.num6s, player2.num6s))
@@ -91,7 +91,7 @@ public class IPLLeagueAnalysis {
 		return max6sList;
 	}
 
-	public List<MostRunBatsmen> getTop4sCricketer(String mostRunCsvFile) throws CSVException {
+	public List<MostRunBatsmen> getTop4sCricketer() throws CSVException {
 		checkBatsMenCustomExceptions();
 		List<MostRunBatsmen> max4sList = mostRunList.stream()
 				.sorted((player1, player2) -> Integer.compare(player1.num4s, player2.num4s))
@@ -101,7 +101,7 @@ public class IPLLeagueAnalysis {
 		return max4sList;
 	}
 
-	public List<MostRunBatsmen> getBestStrikeRateWith6sAnd4s(String mostRunCsvFile) throws CSVException {
+	public List<MostRunBatsmen> getBestStrikeRateWith6sAnd4s() throws CSVException {
 		checkBatsMenCustomExceptions();
 		int mostNumBoundaries = mostRunList.stream().map(i -> i.num4s + i.num6s).max(Integer::compare).get();
 		List<MostRunBatsmen> max4sAnd6sList = mostRunList.stream().filter(i -> i.num4s + i.num6s == mostNumBoundaries)
@@ -115,7 +115,7 @@ public class IPLLeagueAnalysis {
 		return maxStrikeRateList;
 	}
 
-	public List<MostRunBatsmen> getGreatAverageWithBestStrikeRates(String mostRunCsvFile) throws CSVException {
+	public List<MostRunBatsmen> getGreatAverageWithBestStrikeRates() throws CSVException {
 		checkBatsMenCustomExceptions();
 		Double highestAverage = mostRunList.stream().map(i -> i.getAverage()).max(Double::compare).get();
 		List<MostRunBatsmen> maxAverageList = mostRunList.stream().filter(i -> i.getAverage() == highestAverage)
@@ -129,7 +129,7 @@ public class IPLLeagueAnalysis {
 		return maxStrikeRateList;
 	}
 
-	public List<MostRunBatsmen> getCricketersWithMaximumRunWithBestAverages(String mostRunCsvFile) throws CSVException {
+	public List<MostRunBatsmen> getCricketersWithMaximumRunWithBestAverages() throws CSVException {
 		checkBatsMenCustomExceptions();
 		int maximumRuns = mostRunList.stream().map(i -> i.runs).max(Integer::compare).get();
 		List<MostRunBatsmen> maxRunsList = mostRunList.stream().filter(i -> i.runs == maximumRuns)
@@ -143,7 +143,7 @@ public class IPLLeagueAnalysis {
 		return maxAvgList;
 	}
 
-	public List<MostWicketBowler> getTopBowlerAverages(String mostWicketCsvFile) throws CSVException {
+	public List<MostWicketBowler> getTopBowlerAverages() throws CSVException {
 		checkBowlerCustomExceptions();
 		List<MostWicketBowler> sortedAvgList = mostWicketList.stream()
 				.sorted((player1, player2) -> Double.compare(player1.getAverage(), player2.getAverage()))
@@ -151,12 +151,19 @@ public class IPLLeagueAnalysis {
 		return sortedAvgList;
 	}
 
-	public List<MostWicketBowler> getTopBowlerStrikeRate(String mostWicketCsvFile) throws CSVException {
+	public List<MostWicketBowler> getTopBowlerStrikeRate() throws CSVException {
 		checkBowlerCustomExceptions();
 		List<MostWicketBowler> sortedStrikeRateList = mostWicketList.stream()
 				.sorted((player1, player2) -> Double.compare(player1.getSR(), player2.getSR()))
 				.collect(Collectors.toList());
 		return sortedStrikeRateList;
+	}
+
+	public List<MostWicketBowler> getTopBestEconomy() throws CSVException {
+		checkBowlerCustomExceptions();
+		List<MostWicketBowler> sortedEconomyList = mostWicketList.stream()
+				.sorted((player1, player2) -> Double.compare(player1.econ, player2.econ)).collect(Collectors.toList());
+		return sortedEconomyList;
 	}
 
 }

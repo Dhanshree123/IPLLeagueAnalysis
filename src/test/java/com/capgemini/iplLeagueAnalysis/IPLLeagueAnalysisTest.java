@@ -39,7 +39,7 @@ public class IPLLeagueAnalysisTest {
 	@Test
 	public void givenMostRunCSVFileReturnsTop3BattingAverages() throws IPLAnalyserException, CSVException {
 		iplLeagueAnalysis.loadMostRunsData(MOST_RUN_CSV_FILE);
-		List<MostRunBatsmen> averageListTopBatsmen = iplLeagueAnalysis.getTopBatsmenAverages(MOST_RUN_CSV_FILE);
+		List<MostRunBatsmen> averageListTopBatsmen = iplLeagueAnalysis.getTopBatsmenAverages();
 		Assert.assertEquals(83.2, averageListTopBatsmen.get(0).getAverage(), 0.0);
 		Assert.assertEquals(69.2, averageListTopBatsmen.get(1).getAverage(), 0.0);
 		Assert.assertEquals(56.66, averageListTopBatsmen.get(2).getAverage(), 0.0);
@@ -48,7 +48,7 @@ public class IPLLeagueAnalysisTest {
 	@Test
 	public void givenMostRunCSVFileReturnsTop3BatsmenStrikeRates() throws IPLAnalyserException, CSVException {
 		iplLeagueAnalysis.loadMostRunsData(MOST_RUN_CSV_FILE);
-		List<MostRunBatsmen> listOfTopStrikeRate = iplLeagueAnalysis.getTopBatsmenStrikeRate(MOST_RUN_CSV_FILE);
+		List<MostRunBatsmen> listOfTopStrikeRate = iplLeagueAnalysis.getTopBatsmenStrikeRate();
 		Assert.assertEquals(333.33, listOfTopStrikeRate.get(0).sr, 0.0);
 		Assert.assertEquals(204.81, listOfTopStrikeRate.get(1).sr, 0.0);
 		Assert.assertEquals(200.00, listOfTopStrikeRate.get(2).sr, 0.0);
@@ -57,21 +57,21 @@ public class IPLLeagueAnalysisTest {
 	@Test
 	public void givenMostRunCSVFileReturnsCricketerWithMax6s() throws IPLAnalyserException, CSVException {
 		iplLeagueAnalysis.loadMostRunsData(MOST_RUN_CSV_FILE);
-		List<MostRunBatsmen> listOfTopStrikeRate = iplLeagueAnalysis.getTop6sCricketer(MOST_RUN_CSV_FILE);
+		List<MostRunBatsmen> listOfTopStrikeRate = iplLeagueAnalysis.getTop6sCricketer();
 		Assert.assertEquals("Andre Russell", listOfTopStrikeRate.get(0).player);
 	}
 
 	@Test
 	public void givenMostRunCSVFileReturnsCricketerWithMax4s() throws IPLAnalyserException, CSVException {
 		iplLeagueAnalysis.loadMostRunsData(MOST_RUN_CSV_FILE);
-		List<MostRunBatsmen> listOfTopStrikeRate = iplLeagueAnalysis.getTop4sCricketer(MOST_RUN_CSV_FILE);
+		List<MostRunBatsmen> listOfTopStrikeRate = iplLeagueAnalysis.getTop4sCricketer();
 		Assert.assertEquals("Shikhar Dhawan", listOfTopStrikeRate.get(0).player);
 	}
 
 	@Test
 	public void givenMostRunCSVFileReturnsBestStrikeRatesWith6sAnd4s() throws IPLAnalyserException, CSVException {
 		iplLeagueAnalysis.loadMostRunsData(MOST_RUN_CSV_FILE);
-		List<MostRunBatsmen> listOfTopStrikeRate = iplLeagueAnalysis.getBestStrikeRateWith6sAnd4s(MOST_RUN_CSV_FILE);
+		List<MostRunBatsmen> listOfTopStrikeRate = iplLeagueAnalysis.getBestStrikeRateWith6sAnd4s();
 		Assert.assertEquals("Andre Russell", listOfTopStrikeRate.get(0).player);
 	}
 
@@ -79,7 +79,7 @@ public class IPLLeagueAnalysisTest {
 	public void givenMostRunCSVFileReturnsCricketersWithGreatAverageWithBestStrikeRates()
 			throws IPLAnalyserException, CSVException {
 		iplLeagueAnalysis.loadMostRunsData(MOST_RUN_CSV_FILE);
-		List<MostRunBatsmen> listOfTopAverage = iplLeagueAnalysis.getGreatAverageWithBestStrikeRates(MOST_RUN_CSV_FILE);
+		List<MostRunBatsmen> listOfTopAverage = iplLeagueAnalysis.getGreatAverageWithBestStrikeRates();
 		Assert.assertEquals("MS Dhoni", listOfTopAverage.get(0).player);
 	}
 
@@ -87,27 +87,35 @@ public class IPLLeagueAnalysisTest {
 	public void givenMostRunCSVFileReturnsCricketersWithMaximumRunWithBestAverages()
 			throws IPLAnalyserException, CSVException {
 		iplLeagueAnalysis.loadMostRunsData(MOST_RUN_CSV_FILE);
-		List<MostRunBatsmen> listOfMaxRun = iplLeagueAnalysis
-				.getCricketersWithMaximumRunWithBestAverages(MOST_RUN_CSV_FILE);
+		List<MostRunBatsmen> listOfMaxRun = iplLeagueAnalysis.getCricketersWithMaximumRunWithBestAverages();
 		Assert.assertEquals("David Warner", listOfMaxRun.get(0).player);
 	}
 
 	@Test
-	public void givenMostRunCSVFileReturnsTop3BowlingAverages() throws IPLAnalyserException, CSVException {
+	public void givenMostWicketCSVFileReturnsTop3BowlingAverages() throws IPLAnalyserException, CSVException {
 		iplLeagueAnalysis.loadMostWicketsData(MOST_WICKET_CSV_FILE);
-		List<MostWicketBowler> averageList = iplLeagueAnalysis.getTopBowlerAverages(MOST_WICKET_CSV_FILE);
+		List<MostWicketBowler> averageList = iplLeagueAnalysis.getTopBowlerAverages();
 		Assert.assertEquals(11.0, averageList.get(0).getAverage(), 0.0);
 		Assert.assertEquals(14.0, averageList.get(1).getAverage(), 0.0);
 		Assert.assertEquals(14.5, averageList.get(2).getAverage(), 0.0);
 	}
 
 	@Test
-	public void givenMostRunCSVFileReturnsTop3BowlingStrikeRates() throws IPLAnalyserException, CSVException {
+	public void givenMostWicketCSVFileReturnsTop3BowlingStrikeRates() throws IPLAnalyserException, CSVException {
 		iplLeagueAnalysis.loadMostWicketsData(MOST_WICKET_CSV_FILE);
-		List<MostWicketBowler> listOfTopStrikeRate = iplLeagueAnalysis.getTopBowlerStrikeRate(MOST_WICKET_CSV_FILE);
+		List<MostWicketBowler> listOfTopStrikeRate = iplLeagueAnalysis.getTopBowlerStrikeRate();
 		Assert.assertEquals(8.66, listOfTopStrikeRate.get(0).getSR(), 0.0);
 		Assert.assertEquals(10.75, listOfTopStrikeRate.get(1).getSR(), 0.0);
 		Assert.assertEquals(11.00, listOfTopStrikeRate.get(2).getSR(), 0.0);
+	}
+
+	@Test
+	public void givenMostWicketCSVFileReturnsTop3BestEconomy() throws IPLAnalyserException, CSVException {
+		iplLeagueAnalysis.loadMostWicketsData(MOST_WICKET_CSV_FILE);
+		List<MostWicketBowler> listOfTopStrikeRate = iplLeagueAnalysis.getTopBestEconomy();
+		Assert.assertEquals(4.8, listOfTopStrikeRate.get(0).econ, 0.0);
+		Assert.assertEquals(5.5, listOfTopStrikeRate.get(1).econ, 0.0);
+		Assert.assertEquals(6.0, listOfTopStrikeRate.get(2).econ, 0.0);
 	}
 
 }
