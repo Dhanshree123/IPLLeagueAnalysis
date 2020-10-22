@@ -1,4 +1,4 @@
-package com.capgemini.iplLeagueAnalysis;
+package com.capgemini.iplLeagueAnalysis.Analyzer;
 
 import java.io.IOException;
 
