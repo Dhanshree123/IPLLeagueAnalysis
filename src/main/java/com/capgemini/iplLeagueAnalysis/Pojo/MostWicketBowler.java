@@ -2,7 +2,7 @@ package com.capgemini.iplLeagueAnalysis.Pojo;
 
 import com.opencsv.bean.CsvBindByName;
 
-public class MostWicketBowlers {
+public class MostWicketBowler {
 	@CsvBindByName(column = "POS")
 	public int pos;
 
@@ -41,6 +41,18 @@ public class MostWicketBowlers {
 
 	@CsvBindByName(column = "5w")
 	public int num5w;
+
+	public Double getAverage() {
+		if (avg.equals("-"))
+			return Double.MAX_VALUE;
+		return Double.parseDouble(avg);
+	}
+
+	public Double getSR() {
+		if (sr.equals("-"))
+			return Double.MAX_VALUE;
+		return Double.parseDouble(sr);
+	}
 
 	@Override
 	public String toString() {
