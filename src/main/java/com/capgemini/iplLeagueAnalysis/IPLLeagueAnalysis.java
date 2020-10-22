@@ -8,20 +8,22 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.capgemini.iplLeagueAnalysis.Exceptions.IPLAnalyserException;
+import com.capgemini.iplLeagueAnalysis.Pojo.MostRunBatsmen;
+import com.capgemini.iplLeagueAnalysis.Pojo.MostWicketBowlers;
 import com.capgemini.openCSVBuilder.CSVBuilderFactory;
 import com.capgemini.openCSVBuilder.CSVException;
 import com.capgemini.openCSVBuilder.ICSVBuilder;
 
 public class IPLLeagueAnalysis {
-	List<MostRunCSV> mostRunList = null;
-	List<MostWicketCSV> mostWicketList = null;
+	List<MostRunBatsmen> mostRunList = null;
+	List<MostWicketBowlers> mostWicketList = null;
 
 	public int loadMostRunsData(String csvFilePath) throws CSVException, IPLAnalyserException {
-		Reader reader;
-		try {
-			reader = Files.newBufferedReader(Paths.get(csvFilePath));
+		try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
 			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-			mostRunList = csvBuilder.getCsvFileList(reader, MostRunCSV.class);
+			mostRunList = csvBuilder.getCsvFileList(reader, MostRunBatsmen.class);
 			return mostRunList.size();
 		} catch (NullPointerException | IOException e) {
 			throw new IPLAnalyserException(e.getMessage(), IPLAnalyserException.ExceptionType.WRONG_FILE_PATH);
@@ -31,11 +33,9 @@ public class IPLLeagueAnalysis {
 	}
 
 	public int loadMostWicketsData(String csvFilePath) throws IPLAnalyserException, CSVException {
-		Reader reader;
-		try {
-			reader = Files.newBufferedReader(Paths.get(csvFilePath));
+		try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
 			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-			mostWicketList = csvBuilder.getCsvFileList(reader, MostWicketCSV.class);
+			mostWicketList = csvBuilder.getCsvFileList(reader, MostWicketBowlers.class);
 			return mostWicketList.size();
 		} catch (NullPointerException | IOException e) {
 			throw new IPLAnalyserException(e.getMessage(), IPLAnalyserException.ExceptionType.WRONG_FILE_PATH);
@@ -44,14 +44,18 @@ public class IPLLeagueAnalysis {
 		}
 	}
 
-	public List<MostRunCSV> getTopBattingAverages(String csvFilePath) throws CSVException {
+	public void checkCustomExceptions() throws CSVException {
 		if (mostRunList == null) {
 			throw new CSVException("CSV File Builder, not returned list", CSVException.ExceptionType.CSV_ERROR);
 		} else if (mostRunList.size() == 0) {
 			throw new CSVException("List is empty", CSVException.ExceptionType.NO_CSV_DATA);
 		}
 
-		List<MostRunCSV> sortedAvgList = mostRunList.stream()
+	}
+
+	public List<MostRunBatsmen> getTopBattingAverages(String csvFilePath) throws CSVException {
+		checkCustomExceptions();
+		List<MostRunBatsmen> sortedAvgList = mostRunList.stream()
 				.sorted((player1, player2) -> Double.compare(player1.getAverage(), player2.getAverage()))
 				.collect(Collectors.toList());
 		Collections.reverse(sortedAvgList);
@@ -59,27 +63,18 @@ public class IPLLeagueAnalysis {
 		return sortedAvgList;
 	}
 
-	public List<MostRunCSV> getTopStrikeRate(String csvFilePath) throws CSVException {
-		if (mostRunList == null) {
-			throw new CSVException("CSV File Builder, not returned list", CSVException.ExceptionType.CSV_ERROR);
-		} else if (mostRunList.size() == 0) {
-			throw new CSVException("List is empty", CSVException.ExceptionType.NO_CSV_DATA);
-		}
-
-		List<MostRunCSV> sortedStrikeRateList = mostRunList.stream()
+	public List<MostRunBatsmen> getTopStrikeRate(String csvFilePath) throws CSVException {
+		checkCustomExceptions();
+		List<MostRunBatsmen> sortedStrikeRateList = mostRunList.stream()
 				.sorted((player1, player2) -> Double.compare(player1.sr, player2.sr)).collect(Collectors.toList());
 		Collections.reverse(sortedStrikeRateList);
 
 		return sortedStrikeRateList;
 	}
 
-	public List<MostRunCSV> getTop6sCricketer(String mostRunCsvFile) throws CSVException {
-		if (mostRunList == null) {
-			throw new CSVException("CSV File Builder, not returned list", CSVException.ExceptionType.CSV_ERROR);
-		} else if (mostRunList.size() == 0) {
-			throw new CSVException("List is empty", CSVException.ExceptionType.NO_CSV_DATA);
-		}
-		List<MostRunCSV> max6sList = mostRunList.stream()
+	public List<MostRunBatsmen> getTop6sCricketer(String mostRunCsvFile) throws CSVException {
+		checkCustomExceptions();
+		List<MostRunBatsmen> max6sList = mostRunList.stream()
 				.sorted((player1, player2) -> Integer.compare(player1.num6s, player2.num6s))
 				.collect(Collectors.toList());
 		Collections.reverse(max6sList);
@@ -87,13 +82,9 @@ public class IPLLeagueAnalysis {
 		return max6sList;
 	}
 
-	public List<MostRunCSV> getTop4sCricketer(String mostRunCsvFile) throws CSVException {
-		if (mostRunList == null) {
-			throw new CSVException("CSV File Builder, not returned list", CSVException.ExceptionType.CSV_ERROR);
-		} else if (mostRunList.size() == 0) {
-			throw new CSVException("List is empty", CSVException.ExceptionType.NO_CSV_DATA);
-		}
-		List<MostRunCSV> max4sList = mostRunList.stream()
+	public List<MostRunBatsmen> getTop4sCricketer(String mostRunCsvFile) throws CSVException {
+		checkCustomExceptions();
+		List<MostRunBatsmen> max4sList = mostRunList.stream()
 				.sorted((player1, player2) -> Integer.compare(player1.num4s, player2.num4s))
 				.collect(Collectors.toList());
 		Collections.reverse(max4sList);
@@ -101,39 +92,46 @@ public class IPLLeagueAnalysis {
 		return max4sList;
 	}
 
-	public List<MostRunCSV> getBestStrikeRateWith6sAnd4s(String mostRunCsvFile) throws CSVException {
-		if (mostRunList == null) {
-			throw new CSVException("CSV File Builder, not returned list", CSVException.ExceptionType.CSV_ERROR);
-		} else if (mostRunList.size() == 0) {
-			throw new CSVException("List is empty", CSVException.ExceptionType.NO_CSV_DATA);
-		}
+	public List<MostRunBatsmen> getBestStrikeRateWith6sAnd4s(String mostRunCsvFile) throws CSVException {
+		checkCustomExceptions();
 		int mostNumBoundaries = mostRunList.stream().map(i -> i.num4s + i.num6s).max(Integer::compare).get();
-		List<MostRunCSV> max4sAnd6sList = mostRunList.stream().filter(i -> i.num4s + i.num6s == mostNumBoundaries)
+		List<MostRunBatsmen> max4sAnd6sList = mostRunList.stream().filter(i -> i.num4s + i.num6s == mostNumBoundaries)
 				.collect(Collectors.toList());
 
-		double HighestStrikeRate = max4sAnd6sList.stream().map(i -> i.sr).max(Double::compare).get();
+		double highestStrikeRate = max4sAnd6sList.stream().map(i -> i.sr).max(Double::compare).get();
 
-		List<MostRunCSV> maxStrikeRateList = max4sAnd6sList.stream().filter(i -> i.sr == HighestStrikeRate)
+		List<MostRunBatsmen> maxStrikeRateList = max4sAnd6sList.stream().filter(i -> i.sr == highestStrikeRate)
+				.collect(Collectors.toList());
+
+		return maxStrikeRateList;
+	}
+
+	public List<MostRunBatsmen> getGreatAverageWithBestStrikeRates(String mostRunCsvFile) throws CSVException {
+		checkCustomExceptions();
+		Double highestAverage = mostRunList.stream().map(i -> i.getAverage()).max(Double::compare).get();
+		List<MostRunBatsmen> maxAverageList = mostRunList.stream().filter(i -> i.getAverage() == highestAverage)
+				.collect(Collectors.toList());
+
+		double highestStrikeRate = maxAverageList.stream().map(i -> i.sr).max(Double::compare).get();
+
+		List<MostRunBatsmen> maxStrikeRateList = maxAverageList.stream().filter(i -> i.sr == highestStrikeRate)
 				.collect(Collectors.toList());
 
 		return maxStrikeRateList;
 	}
 
-	public List<MostRunCSV> getGreatAverageWithBestStrikeRates(String mostRunCsvFile) throws CSVException {
-		if (mostRunList == null) {
-			throw new CSVException("CSV File Builder, not returned list", CSVException.ExceptionType.CSV_ERROR);
-		} else if (mostRunList.size() == 0) {
-			throw new CSVException("List is empty", CSVException.ExceptionType.NO_CSV_DATA);
-		}
-		Double HighestAverage = mostRunList.stream().map(i -> i.getAverage()).max(Double::compare).get();
-		List<MostRunCSV> maxAverageList = mostRunList.stream().filter(i -> i.getAverage() == HighestAverage)
+	public List<MostRunBatsmen> getCricketersWithMaximumRunWithBestAverages(String mostRunCsvFile) throws CSVException {
+		checkCustomExceptions();
+		int maximumRuns = mostRunList.stream().map(i -> i.runs).max(Integer::compare).get();
+		List<MostRunBatsmen> maxRunsList = mostRunList.stream().filter(i -> i.runs == maximumRuns)
 				.collect(Collectors.toList());
 
-		double HighestStrikeRate = maxAverageList.stream().map(i -> i.sr).max(Double::compare).get();
+		double highestAverage = maxRunsList.stream().map(i -> i.getAverage()).max(Double::compare).get();
 
-		List<MostRunCSV> maxStrikeRateList = maxAverageList.stream().filter(i -> i.sr == HighestStrikeRate)
+		List<MostRunBatsmen> maxAvgList = maxRunsList.stream().filter(i -> i.getAverage() == highestAverage)
 				.collect(Collectors.toList());
 
-		return maxStrikeRateList;
+		return maxAvgList;
 	}
+
 }

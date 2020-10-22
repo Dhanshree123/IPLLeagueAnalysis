@@ -1,4 +1,4 @@
-package com.capgemini.iplLeagueAnalysis;
+package com.capgemini.iplLeagueAnalysis.Exceptions;
 
 public class IPLAnalyserException extends Exception {
 	public enum ExceptionType {

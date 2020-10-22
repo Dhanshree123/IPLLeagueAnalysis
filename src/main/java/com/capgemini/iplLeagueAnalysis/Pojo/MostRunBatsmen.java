@@ -1,8 +1,8 @@
-package com.capgemini.iplLeagueAnalysis;
+package com.capgemini.iplLeagueAnalysis.Pojo;
 
 import com.opencsv.bean.CsvBindByName;
 
-public class MostRunCSV {
+public class MostRunBatsmen {
 	@CsvBindByName(column = "POS")
 	public int pos;
 
