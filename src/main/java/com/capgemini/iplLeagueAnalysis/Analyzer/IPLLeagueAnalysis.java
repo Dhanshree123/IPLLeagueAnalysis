@@ -6,7 +6,6 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -185,17 +184,33 @@ public class IPLLeagueAnalysis {
 	public List<MostWicketBowler> getGreatAverageWithBestStrikeRatesBowler() throws CSVException {
 		checkBowlerCustomExceptions();
 
-		Double LowestAverage = mostWicketList.stream().map(i -> i.getAverage()).min(Double::compare).get();
+		Double lowestAverage = mostWicketList.stream().map(i -> i.getAverage()).min(Double::compare).get();
 
 		List<MostWicketBowler> minAverageList = mostWicketList.stream()
-				.filter(i -> i.getAverage().equals(LowestAverage)).collect(Collectors.toList());
+				.filter(i -> i.getAverage().equals(lowestAverage)).collect(Collectors.toList());
 
-		double LowestStrikeRate = minAverageList.stream().map(i -> i.getSR()).min(Double::compare).get();
+		double lowestStrikeRate = minAverageList.stream().map(i -> i.getSR()).min(Double::compare).get();
 
 		List<MostWicketBowler> lowStrikeRateList = minAverageList.stream()
-				.filter(i -> i.getSR().equals(LowestStrikeRate)).collect(Collectors.toList());
+				.filter(i -> i.getSR().equals(lowestStrikeRate)).collect(Collectors.toList());
 
 		return lowStrikeRateList;
+	}
+
+	public List<MostWicketBowler> getlistOfMaximumWicketsWithBestAverages() throws CSVException {
+		checkBowlerCustomExceptions();
+
+		int maxWickets = mostWicketList.stream().map(i -> i.wkts).max(Integer::compare).get();
+
+		List<MostWicketBowler> maxWicketsList = mostWicketList.stream().filter(i -> i.wkts == maxWickets)
+				.collect(Collectors.toList());
+
+		double LowestAvgRate = maxWicketsList.stream().map(i -> i.getAverage()).min(Double::compare).get();
+
+		List<MostWicketBowler> LowestAvgRateList = maxWicketsList.stream()
+				.filter(i -> i.getAverage().equals(LowestAvgRate)).collect(Collectors.toList());
+
+		return LowestAvgRateList;
 	}
 
 }
