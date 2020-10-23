@@ -166,4 +166,19 @@ public class IPLLeagueAnalysis {
 		return sortedEconomyList;
 	}
 
+	public List<MostWicketBowler> getBestStrikeRatesWith5wAnd4w() throws CSVException {
+		checkBowlerCustomExceptions();
+
+		int mostNum4wAnd5w = mostWicketList.stream().map(i -> i.num4w + i.num5w).max(Integer::compare).get();
+		List<MostWicketBowler> max4wAnd5wList = mostWicketList.stream().filter(i -> i.num4w + i.num5w == mostNum4wAnd5w)
+				.collect(Collectors.toList());
+
+		double lowestStrikeRate = max4wAnd5wList.stream().map(i -> i.getSR()).min(Double::compare).get();
+
+		List<MostWicketBowler> lowStrikeRateList = max4wAnd5wList.stream().filter(i -> i.getSR() == lowestStrikeRate)
+				.collect(Collectors.toList());
+
+		return lowStrikeRateList;
+	}
+
 }

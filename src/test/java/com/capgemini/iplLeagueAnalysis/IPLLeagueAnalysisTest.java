@@ -118,4 +118,11 @@ public class IPLLeagueAnalysisTest {
 		Assert.assertEquals(6.0, listOfTopStrikeRate.get(2).econ, 0.0);
 	}
 
+	@Test
+	public void givenMostWicketCSVFileReturnsBestStrikeRatesWith5wAnd4w() throws IPLAnalyserException, CSVException {
+		iplLeagueAnalysis.loadMostWicketsData(MOST_WICKET_CSV_FILE);
+		List<MostWicketBowler> listOfBestStrikeRatesWith5wAnd4w = iplLeagueAnalysis.getBestStrikeRatesWith5wAnd4w();
+		Assert.assertEquals("Kagiso Rabada", listOfBestStrikeRatesWith5wAnd4w.get(0).player);
+	}
+
 }
