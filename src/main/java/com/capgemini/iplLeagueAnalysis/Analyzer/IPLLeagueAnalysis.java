@@ -6,6 +6,7 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -177,6 +178,22 @@ public class IPLLeagueAnalysis {
 
 		List<MostWicketBowler> lowStrikeRateList = max4wAnd5wList.stream().filter(i -> i.getSR() == lowestStrikeRate)
 				.collect(Collectors.toList());
+
+		return lowStrikeRateList;
+	}
+
+	public List<MostWicketBowler> getGreatAverageWithBestStrikeRatesBowler() throws CSVException {
+		checkBowlerCustomExceptions();
+
+		Double LowestAverage = mostWicketList.stream().map(i -> i.getAverage()).min(Double::compare).get();
+
+		List<MostWicketBowler> minAverageList = mostWicketList.stream()
+				.filter(i -> i.getAverage().equals(LowestAverage)).collect(Collectors.toList());
+
+		double LowestStrikeRate = minAverageList.stream().map(i -> i.getSR()).min(Double::compare).get();
+
+		List<MostWicketBowler> lowStrikeRateList = minAverageList.stream()
+				.filter(i -> i.getSR().equals(LowestStrikeRate)).collect(Collectors.toList());
 
 		return lowStrikeRateList;
 	}
