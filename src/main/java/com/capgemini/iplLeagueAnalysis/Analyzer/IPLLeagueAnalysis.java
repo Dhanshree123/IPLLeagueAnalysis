@@ -264,4 +264,18 @@ public class IPLLeagueAnalysis {
 		return bestAllRounderList;
 	}
 
+	public List<MostRunBatsmen> getCricketersWithMaximum100sWithBestAverages() throws CSVException {
+		checkBatsMenCustomExceptions();
+		int maximumHundreds = mostRunList.stream().map(i -> i.num100).max(Integer::compare).get();
+		List<MostRunBatsmen> maxHundredsList = mostRunList.stream().filter(i -> i.num100 == maximumHundreds)
+				.collect(Collectors.toList());
+
+		double highestAverage = maxHundredsList.stream().map(i -> i.getAverage()).max(Double::compare).get();
+
+		List<MostRunBatsmen> maxAvgList = maxHundredsList.stream().filter(i -> i.getAverage() == highestAverage)
+				.collect(Collectors.toList());
+
+		return maxAvgList;
+	}
+
 }
