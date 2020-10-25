@@ -163,12 +163,21 @@ public class IPLLeagueAnalysisTest {
 		Assert.assertEquals("Hardik Pandya", bestAllRounderPlayer.get(1));
 		Assert.assertEquals("Suresh Raina", bestAllRounderPlayer.get(2));
 	}
-	
+
 	@Test
 	public void givenMostRunCSVFileReturnsCricketersWithMaximum100sWithBestAverages()
 			throws IPLAnalyserException, CSVException {
 		iplLeagueAnalysis.loadMostRunsData(MOST_RUN_CSV_FILE);
 		List<MostRunBatsmen> listOfMaxHundreds = iplLeagueAnalysis.getCricketersWithMaximum100sWithBestAverages();
 		Assert.assertEquals("David Warner", listOfMaxHundreds.get(0).player);
+	}
+
+	@Test
+	public void givenMostRunCSVFileReturnsCricketersWithZeroHundredsAndFiftiesButBestAvg()
+			throws IPLAnalyserException, CSVException {
+		iplLeagueAnalysis.loadMostRunsData(MOST_RUN_CSV_FILE);
+		List<MostRunBatsmen> listOfZeroHundredsAndFiftiesButBestAvg = iplLeagueAnalysis
+				.getZeroHundredsAndFiftiesButBestAvg();
+		Assert.assertEquals("Marcus Stoinis", listOfZeroHundredsAndFiftiesButBestAvg.get(0).player);
 	}
 }

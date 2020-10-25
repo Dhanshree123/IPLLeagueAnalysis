@@ -278,4 +278,17 @@ public class IPLLeagueAnalysis {
 		return maxAvgList;
 	}
 
+	public List<MostRunBatsmen> getZeroHundredsAndFiftiesButBestAvg() throws CSVException {
+		checkBatsMenCustomExceptions();
+		List<MostRunBatsmen> zeroHundredsAndFifties = mostRunList.stream().filter(i -> i.num100 + i.num50 == 0)
+				.collect(Collectors.toList());
+
+		double highestAvg = zeroHundredsAndFifties.stream().map(i -> i.getAverage()).max(Double::compare).get();
+
+		List<MostRunBatsmen> maxAvgList = zeroHundredsAndFifties.stream().filter(i -> i.getAverage() == highestAvg)
+				.collect(Collectors.toList());
+
+		return maxAvgList;
+	}
+
 }
