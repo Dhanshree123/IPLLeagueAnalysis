@@ -153,4 +153,14 @@ public class IPLLeagueAnalysisTest {
 		Assert.assertEquals("Marcus Stoinis", bestAvgPlayer.get(1));
 		Assert.assertEquals("Hardik Pandya", bestAvgPlayer.get(2));
 	}
+
+	@Test
+	public void givenCSVFilesReturnsBestAllrounderCricketers() throws IPLAnalyserException, CSVException {
+		iplLeagueAnalysis.loadMostRunsData(MOST_RUN_CSV_FILE);
+		iplLeagueAnalysis.loadMostWicketsData(MOST_WICKET_CSV_FILE);
+		List<String> bestAllRounderPlayer = iplLeagueAnalysis.getlistOfBestAllRounder();
+		Assert.assertEquals("Andre Russell", bestAllRounderPlayer.get(0));
+		Assert.assertEquals("Hardik Pandya", bestAllRounderPlayer.get(1));
+		Assert.assertEquals("Suresh Raina", bestAllRounderPlayer.get(2));
+	}
 }

@@ -217,7 +217,7 @@ public class IPLLeagueAnalysis {
 	public List<String> getlistOfBestBattingAndBowlingAverages() throws CSVException {
 		checkBatsMenCustomExceptions();
 		checkBowlerCustomExceptions();
-		
+
 		List<String> bestAvgList = new ArrayList<>();
 
 		List<MostRunBatsmen> sortedAvgBatsmenList = mostRunList.stream()
@@ -237,6 +237,31 @@ public class IPLLeagueAnalysis {
 			}
 		}
 		return bestAvgList;
+	}
+
+	public List<String> getlistOfBestAllRounder() throws CSVException {
+		checkBatsMenCustomExceptions();
+		checkBowlerCustomExceptions();
+
+		List<String> bestAllRounderList = new ArrayList<>();
+
+		List<MostRunBatsmen> sortedRunBatsmenList = mostRunList.stream()
+				.sorted((player1, player2) -> Double.compare(player1.runs, player2.runs)).collect(Collectors.toList());
+		Collections.reverse(sortedRunBatsmenList);
+
+		List<MostWicketBowler> sortedWicketBowlerList = mostWicketList.stream()
+				.sorted((player1, player2) -> Double.compare(player1.wkts, player2.wkts)).collect(Collectors.toList());
+
+		Collections.reverse(sortedWicketBowlerList);
+
+		for (MostRunBatsmen bat : sortedRunBatsmenList) {
+			for (MostWicketBowler bowl : sortedWicketBowlerList) {
+				if (bat.player.equals(bowl.player)) {
+					bestAllRounderList.add(bat.player);
+				}
+			}
+		}
+		return bestAllRounderList;
 	}
 
 }
